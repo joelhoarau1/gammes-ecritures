@@ -57,6 +57,16 @@ Règles d'écriture :
 - chaque bloc et chaque ligne se terminent par une virgule ;
 - pour ajouter une activité, copiez un bloc existant et changez son `id`.
 
+## Changer l'image du bandeau d'accueil
+
+Par défaut, la page d'accueil affiche un dessin de cahier. Pour le remplacer par une photo :
+
+1. Préparez une image en format paysage, environ 1600 × 700 pixels, de moins de 500 Ko.
+2. Nommez-la exactement `bandeau.jpg` (ou `bandeau.png`, `bandeau.webp`).
+3. Déposez-la dans le dossier `src` du dépôt, puis *Commit changes*.
+
+Pour revenir au dessin, supprimez ce fichier. Pour une photo d'élèves, vérifiez l'autorisation de droit à l'image ou la licence de la photo.
+
 ## Fichiers du dépôt
 
 - `src/` : activités, programme (`app.js`), mise en forme (`style.css`), structure de la page (`body.html`).

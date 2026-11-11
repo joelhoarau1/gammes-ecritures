@@ -98,6 +98,18 @@
   }
 
   /* ───────── Catalogue ───────── */
+  // Bandeau par défaut : une page de cahier Seyès. Remplacé par src/bandeau.jpg si ce fichier existe (voir build.py).
+  const BANDEAU_DESSIN = (function () {
+    const vague = (x, y, n) => '<path class="b-encre" d="M' + x + ' ' + y + ' q7 -20 14 0' + ' t14 0'.repeat(n) + '"/>';
+    let l = '';
+    for (let y = 46; y < 280; y += 12) l += '<path class="' + ((y - 46) % 48 ? 'b-fin' : 'b-ligne') + '" d="M0 ' + y + 'H800"/>';
+    for (let x = 152; x < 800; x += 48) l += '<path class="b-fin" d="M' + x + ' 0V280"/>';
+    return '<svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Page de cahier avec une ligne d’écriture et un crayon">' +
+      '<rect class="b-papier" width="800" height="280"/>' + l + '<path class="b-marge" d="M104 0V280"/>' +
+      vague(128, 94, 22) + vague(128, 142, 30) + vague(128, 190, 12) +
+      '<g transform="translate(330 196) rotate(-32)"><rect class="b-crayon" x="0" y="-11" width="250" height="22" rx="3"/><rect class="b-bague" x="214" y="-11" width="16" height="22"/>' +
+      '<path class="b-bois" d="M0 -11L-34 0L0 11Z"/><path class="b-mine" d="M-34 0L-22 -4V4Z"/></g></svg>';
+  })();
   function renderCatalogue() {
     const q = plain(state.q.trim());
     const list = BASE.map(b => act(b.id)).filter(a => (q || store.f === 'toutes' || a.f === store.f) && (!q || plain(a.t + ' ' + a.o + ' ' + a.g + ' ' + FAM[a.f].t).includes(q)));
@@ -114,7 +126,11 @@
       : store.f === 'toutes'
         ? '<h1>Des gammes d’écriture prêtes pour la classe</h1><p>' + BASE.length + ' exercices courts tirés du guide ministériel, chacun en trois niveaux. Ouvrez une activité pour adapter ses textes, la projeter au tableau ou l’imprimer.</p>'
         : '<h1>' + esc(typo(FAM[store.f].t)) + '</h1><p>' + esc(typo(FAM[store.f].d)) + '. ' + list.length + ' activités, chacune en trois niveaux.</p>';
-    main.innerHTML = '<div class="intro">' + head + '</div>' +
+    const home = !q && store.f === 'toutes';
+    main.innerHTML = (home
+      ? '<div class="hero"><div class="intro">' + head + '</div><figure class="hero-img">' +
+        (window.BANDEAU ? '<img src="' + window.BANDEAU + '" alt="Des élèves en train d’écrire en classe">' : BANDEAU_DESSIN) + '</figure></div>'
+      : '<div class="intro">' + head + '</div>') +
       (groups.length ? groups.map(g =>
         '<section class="group"><h2>' + esc(g.label) + (g.sub ? '<span>' + esc(g.sub) + '</span>' : '') + '</h2><div class="cards">' +
         g.items.map(a => '<button class="card" data-open="' + a.id + '"><b>' + esc(a.t) + '</b><p>' + esc(a.o) + '</p><footer><span>' + esc(a.d) + '</span><span>' + esc(a.m) + '</span><span>Guide p. ' + a.p + '</span>' + (isEdited(a.id) ? '<span class="mod">modifiée</span>' : '') + '</footer></button>').join('') +
