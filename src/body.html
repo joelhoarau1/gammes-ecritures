@@ -1,0 +1,50 @@
+<div class="wrap">
+  <header class="top">
+    <button class="brand" data-home title="Revenir à toutes les activités"><b>Gammes d’écriture</b><span>cycle 3 · CM1, CM2, 6e</span></button>
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Chercher une activité : connecteurs, accord, plan…" aria-label="Chercher une activité" autocomplete="off">
+    </label>
+  </header>
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Familles d’activités"></nav>
+    <main id="main"></main>
+  </div>
+</div>
+
+<div class="pz" id="pz" hidden role="dialog" aria-label="Mode projection"></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<dialog id="dlg-print" aria-labelledby="print-h">
+  <div class="dlg">
+    <h2 id="print-h">Préparer la fiche à imprimer</h2>
+    <div class="field"><span>Niveaux</span>
+      <label class="opt"><input type="radio" name="print-niv" id="print-one" checked><span>Niveau affiché</span></label>
+      <label class="opt"><input type="radio" name="print-niv" id="print-all"><span>Les trois niveaux, une page par niveau (pour différencier)</span></label>
+    </div>
+    <label class="field"><span>Lignes pour écrire sur la fiche</span>
+      <select id="print-lignes"><option value="0">Aucune : les élèves écrivent dans leur cahier</option><option value="fill" selected>Remplir le reste de la page</option><option value="6">6 lignes</option><option value="12">12 lignes</option></select>
+    </label>
+    <label class="opt"><input type="checkbox" id="print-aide" checked><span>Faire figurer le coup de pouce, quand il y en a un</span></label>
+    <label class="opt"><input type="checkbox" id="print-prof"><span>Ajouter la page enseignant : réponses attendues et conseils</span></label>
+    <p id="print-note"></p>
+    <p class="status" id="print-status" hidden></p>
+    <div class="dlg-foot"><button class="btn quiet" data-close>Annuler</button><button class="btn primary" id="print-go">Imprimer</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-ai" aria-labelledby="ai-title">
+  <form class="dlg" id="ai-form">
+    <h2 id="ai-title">Nouveau support</h2>
+    <p>Claude réécrit le support des trois niveaux sur le thème de votre choix, en gardant la forme de l’exercice. L’objectif et les étapes ne changent pas.</p>
+    <label class="field"><span>Thème ou contexte</span>
+      <input type="text" id="ai-theme" maxlength="120" placeholder="les volcans, le marché de Kigali, le Moyen Âge…" autocomplete="off">
+    </label>
+    <label class="field"><span>Précisions (facultatif)</span>
+      <input type="text" id="ai-plus" maxlength="200" placeholder="classe de CM1, phrases plus courtes, lien avec notre sortie…" autocomplete="off">
+    </label>
+    <p>La demande utilise votre compte Claude. Relisez toujours un texte généré avant de le donner aux élèves ; vous pourrez annuler ou rétablir le texte d’origine.</p>
+    <p class="status" id="ai-status" hidden></p>
+    <div class="dlg-foot"><button type="button" class="btn quiet" data-close>Fermer</button><button type="button" class="btn" id="ai-stop" hidden>Arrêter</button><button type="submit" class="btn primary" id="ai-go">Rédiger les trois niveaux</button></div>
+  </form>
+</dialog>
